@@ -7,3 +7,5 @@ env.json
 *.code-workspace
 .idea/
 .vscode/
+test/
+scripts/
