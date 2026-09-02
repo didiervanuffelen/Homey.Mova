@@ -39,12 +39,3 @@ Homey logs in with **email and password only**. A website login code from mova.t
 MOVAhome exposes the same Dreame floor map as the official app (MIOT map service `siid=6`: live I/P-frames, OSS map file, robot pose). Add the **Robot map** widget to a Homey dashboard and pick your vacuum. While the robot is cleaning the widget refreshes every few seconds.
 
 Protocol is the reverse-engineered MOVAhome cloud API used by [matterbridge-mova](https://github.com/diveflo/matterbridge-mova) (OAuth password grant to `*.iot.mova-tech.com:13267`, MD5 password + salt, `Dreame-Auth`, `device/listV2`, `sendCommand`).
-
-## Develop
-
-```bash
-npm test
-npx homey app validate
-```
-
-Install on Homey Pro with `npx homey app install`.
