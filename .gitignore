@@ -1,5 +1,9 @@
 node_modules/
 .homeybuild/
 .env
+env.json
 *.log
 .DS_Store
+*.code-workspace
+.idea/
+.vscode/
