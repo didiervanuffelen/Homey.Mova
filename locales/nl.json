@@ -1,4 +1,26 @@
 {
+  "pair": {
+    "title": "MOVAhome",
+    "legend_region": "MOVAhome-regio",
+    "region_label": "Cloudregio van je MOVAhome-account",
+    "region_eu": "Europa (EU)",
+    "region_us": "Verenigde Staten (US)",
+    "region_cn": "China (CN)",
+    "region_sg": "Singapore / Azië (SG)",
+    "region_ru": "Rusland (RU)",
+    "legend_account": "MOVAhome-account",
+    "password_hint": "Stel eerst een wachtwoord in via de officiële MOVAhome-app. Homey accepteert alleen e-mail en wachtwoord — geen verificatiecode van mova.tech. Als je met Apple ID bent begonnen: MOVAhome → account → Wachtwoord vergeten / Wachtwoord instellen, en voer daarna dat e-mailadres en wachtwoord hier in.",
+    "username": "E-mail of gebruikersnaam",
+    "password": "Wachtwoord",
+    "submit": "Inloggen",
+    "repair_submit": "Inloggen en verbinding herstellen",
+    "missing": "Vul je MOVAhome-e-mail, wachtwoord en regio in. Stel eerst een wachtwoord in via de MOVAhome-app als je Apple ID gebruikte.",
+    "failed": "Inloggen mislukt"
+  },
+  "error": {
+    "login_missing": "Vul je MOVAhome-e-mail, wachtwoord en regio in. Stel eerst een wachtwoord in via de MOVAhome-app als je Apple ID gebruikte.",
+    "not_logged_in": "Niet ingelogd"
+  },
   "widget": {
     "map": {
       "loading": "Kaart laden…",

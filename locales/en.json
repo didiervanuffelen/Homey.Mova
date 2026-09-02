@@ -1,4 +1,26 @@
 {
+  "pair": {
+    "title": "MOVAhome",
+    "legend_region": "MOVAhome region",
+    "region_label": "Cloud region of your MOVAhome account",
+    "region_eu": "Europe (EU)",
+    "region_us": "United States (US)",
+    "region_cn": "China (CN)",
+    "region_sg": "Singapore / Asia (SG)",
+    "region_ru": "Russia (RU)",
+    "legend_account": "MOVAhome account",
+    "password_hint": "Set a password in the official MOVAhome app first. Homey only accepts email and password — not a verification code from mova.tech. If you signed up with Apple ID, open MOVAhome → account → Forgot password / Set password, then enter that email and password here.",
+    "username": "Email or username",
+    "password": "Password",
+    "submit": "Log in",
+    "repair_submit": "Sign in & restore connection",
+    "missing": "Enter your MOVAhome email, password, and region. Set a password in the MOVAhome app first if you used Apple ID.",
+    "failed": "Login failed"
+  },
+  "error": {
+    "login_missing": "Enter your MOVAhome email, password, and region. Set a password in the MOVAhome app first if you used Apple ID.",
+    "not_logged_in": "Not logged in"
+  },
   "widget": {
     "map": {
       "loading": "Loading map…",

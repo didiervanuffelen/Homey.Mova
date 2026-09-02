@@ -4,6 +4,8 @@
     "nl": "MOVA Stofzuiger"
   },
   "class": "vacuumcleaner",
+  "platforms": ["local"],
+  "connectivity": ["cloud"],
   "capabilities": [
     "measure_battery",
     "mova_operational_status",

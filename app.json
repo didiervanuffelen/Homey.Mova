@@ -12,8 +12,8 @@
     "nl": "MOVA Stofzuiger"
   },
   "description": {
-    "en": "Control a MOVA robot vacuum from Homey with your MOVAhome account.",
-    "nl": "Bestuur een MOVA-robotstofzuiger vanuit Homey met je MOVAhome-account."
+    "en": "Spotless floors, without lifting a finger.",
+    "nl": "Schone vloeren, zonder een vinger uit te steken."
   },
   "category": [
     "appliances"
@@ -44,7 +44,20 @@
     "xlarge": "/assets/images/xlarge.png"
   },
   "author": {
-    "name": "Didier"
+    "name": "Didier",
+    "email": "didiervanuffelen@telenet.be"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Didier"
+      }
+    ]
+  },
+  "source": "https://github.com/didiervanuffelen/Homey.Mova",
+  "support": "mailto:didiervanuffelen@telenet.be",
+  "bugs": {
+    "url": "https://github.com/didiervanuffelen/Homey.Mova/issues"
   },
   "api": {
     "getMap": {
@@ -614,6 +627,12 @@
         "nl": "MOVA Stofzuiger"
       },
       "class": "vacuumcleaner",
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
       "capabilities": [
         "measure_battery",
         "mova_operational_status",

@@ -95,7 +95,7 @@ class MovaVacuumDriver extends Homey.Driver {
       const password = data.password || '';
       const region = normalizeRegion(data.region);
       if (!username || !password) {
-        throw new Error('Enter your MOVAhome email, password, and region. Set a password in the MOVAhome app first if you used Apple ID.');
+        throw new Error(this.homey.__('error.login_missing'));
       }
 
       credentials = { username, password, region };
@@ -107,7 +107,7 @@ class MovaVacuumDriver extends Homey.Driver {
 
     session.setHandler('list_devices', async () => {
       if (!credentials) {
-        throw new Error('Not logged in');
+        throw new Error(this.homey.__('error.not_logged_in'));
       }
       const client = listV2Client || this._createClient(credentials);
       if (!listV2Client) {
@@ -129,7 +129,7 @@ class MovaVacuumDriver extends Homey.Driver {
       const password = data.password || '';
       const region = normalizeRegion(data.region || device.getStoreValue('region'));
       if (!username || !password) {
-        throw new Error('Enter your MOVAhome email, password, and region. Set a password in the MOVAhome app first if you used Apple ID.');
+        throw new Error(this.homey.__('error.login_missing'));
       }
 
       const client = this._createClient({ username, password, region });
