@@ -1,0 +1,19 @@
+{
+  "widget": {
+    "map": {
+      "loading": "Kaart laden…",
+      "no_device": "Kies een MOVA-stofzuiger in de widgetinstellingen.",
+      "no_map": "Nog geen kaart. Start een schoonmaakbeurt zodat de robot een plattegrond kan sturen.",
+      "status": {
+        "cleaning": "Stofzuigen",
+        "mopping": "Dweilen",
+        "vacuum_and_mop": "Stofzuigen en dweilen",
+        "paused": "Gepauzeerd",
+        "returning": "Naar station",
+        "docked": "Aan het station",
+        "charging": "Aan het laden",
+        "stopped": "Gestopt"
+      }
+    }
+  }
+}

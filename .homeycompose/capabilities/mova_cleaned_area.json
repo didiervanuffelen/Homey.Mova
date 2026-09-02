@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "title": { "en": "Cleaned area", "nl": "Schoongemaakt oppervlak" },
+  "units": { "en": "m²", "nl": "m²" },
+  "decimals": 0,
+  "min": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/icons/area.svg"
+}

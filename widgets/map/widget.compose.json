@@ -1,0 +1,22 @@
+{
+  "name": {
+    "en": "Robot map",
+    "nl": "Robotkaart"
+  },
+  "height": "100%",
+  "transparent": false,
+  "devices": {
+    "type": "app",
+    "singular": true,
+    "filter": {
+      "class": "vacuumcleaner"
+    }
+  },
+  "settings": [],
+  "api": {
+    "getMap": {
+      "method": "GET",
+      "path": "/"
+    }
+  }
+}

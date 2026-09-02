@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": { "en": "Empty dustbin", "nl": "Stofbak legen" },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "uiQuickAction": true,
+  "icon": "/assets/icons/empty.svg"
+}

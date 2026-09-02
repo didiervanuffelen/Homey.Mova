@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": { "en": "Stop", "nl": "Stoppen" },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "uiQuickAction": true,
+  "icon": "/assets/icons/stop.svg"
+}

@@ -1,0 +1,22 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Status",
+    "nl": "Status"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/icons/status.svg",
+  "insights": true,
+  "values": [
+    { "id": "cleaning", "title": { "en": "Vacuuming", "nl": "Stofzuigen" } },
+    { "id": "mopping", "title": { "en": "Mopping", "nl": "Dweilen" } },
+    { "id": "vacuum_and_mop", "title": { "en": "Vacuum & mop", "nl": "Stofzuigen en dweilen" } },
+    { "id": "paused", "title": { "en": "Paused", "nl": "Gepauzeerd" } },
+    { "id": "returning", "title": { "en": "Returning", "nl": "Naar station" } },
+    { "id": "docked", "title": { "en": "Docked", "nl": "Aan het station" } },
+    { "id": "charging", "title": { "en": "Charging", "nl": "Aan het laden" } },
+    { "id": "stopped", "title": { "en": "Stopped", "nl": "Gestopt" } }
+  ]
+}

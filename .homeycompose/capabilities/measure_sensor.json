@@ -1,0 +1,13 @@
+{
+  "type": "number",
+  "title": { "en": "Sensors", "nl": "Sensoren" },
+  "units": { "en": "%" },
+  "decimals": 0,
+  "min": 0,
+  "max": 100,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/icons/sensor.svg"
+}

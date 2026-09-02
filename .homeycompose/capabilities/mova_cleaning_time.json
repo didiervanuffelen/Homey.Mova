@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "title": { "en": "Cleaning time", "nl": "Schoonmaaktijd" },
+  "units": { "en": "min", "nl": "min" },
+  "decimals": 0,
+  "min": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/icons/time.svg"
+}

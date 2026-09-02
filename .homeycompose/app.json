@@ -1,0 +1,36 @@
+{
+  "id": "com.mova.vacuum",
+  "version": "1.0.0",
+  "compatibility": ">=12.3.0",
+  "sdk": 3,
+  "platforms": ["local"],
+  "name": {
+    "en": "MOVA Vacuum",
+    "nl": "MOVA Stofzuiger"
+  },
+  "description": {
+    "en": "Control a MOVA robot vacuum from Homey with your MOVAhome account.",
+    "nl": "Bestuur een MOVA-robotstofzuiger vanuit Homey met je MOVAhome-account."
+  },
+  "category": ["appliances"],
+  "tags": {
+    "en": ["MOVA", "vacuum", "robot vacuum", "V70", "MOVAhome", "mop"],
+    "nl": ["MOVA", "stofzuiger", "robotstofzuiger", "V70", "MOVAhome", "dweilen"]
+  },
+  "brandColor": "#155E63",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Didier"
+  },
+  "api": {
+    "getMap": {
+      "method": "GET",
+      "path": "/map"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "boolean",
+  "title": { "en": "Consumable low", "nl": "Verbruiksartikel bijna op" },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "A consumable is almost worn out",
+    "nl": "Een verbruiksartikel is bijna op"
+  },
+  "insightsTitleFalse": {
+    "en": "Consumables are OK",
+    "nl": "Verbruiksartikelen zijn in orde"
+  },
+  "icon": "/assets/icons/consumable.svg"
+}

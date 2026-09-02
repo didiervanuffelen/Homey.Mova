@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": { "en": "Start vacuuming", "nl": "Stofzuigen starten" },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "uiQuickAction": true,
+  "icon": "/assets/icons/start_vacuum.svg"
+}

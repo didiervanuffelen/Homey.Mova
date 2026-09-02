@@ -1,0 +1,10 @@
+{
+  "1.1.0": {
+    "en": "Adds a dashboard widget that shows the live floor map and robot position from MOVAhome.",
+    "nl": "Voegt een dashboard-widget toe die de live plattegrond en robotpositie van MOVAhome toont."
+  },
+  "1.0.4": {
+    "en": "Shows vacuum & mop as a distinct status and reads remaining consumable life.",
+    "nl": "Toont stofzuigen en dweilen als aparte status en leest de resterende levensduur van verbruiksartikelen."
+  }
+}

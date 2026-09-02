@@ -1,0 +1,13 @@
+{
+  "type": "enum",
+  "title": { "en": "Water level", "nl": "Waterstand" },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "icon": "/assets/icons/water.svg",
+  "values": [
+    { "id": "low", "title": { "en": "Low", "nl": "Laag" } },
+    { "id": "medium", "title": { "en": "Medium", "nl": "Gemiddeld" } },
+    { "id": "high", "title": { "en": "High", "nl": "Hoog" } }
+  ]
+}

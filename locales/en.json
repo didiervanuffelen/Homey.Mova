@@ -1,0 +1,19 @@
+{
+  "widget": {
+    "map": {
+      "loading": "Loading map…",
+      "no_device": "Select a MOVA vacuum in the widget settings.",
+      "no_map": "No map yet. Start a clean so the robot can send a floor plan.",
+      "status": {
+        "cleaning": "Vacuuming",
+        "mopping": "Mopping",
+        "vacuum_and_mop": "Vacuum & mop",
+        "paused": "Paused",
+        "returning": "Returning",
+        "docked": "Docked",
+        "charging": "Charging",
+        "stopped": "Stopped"
+      }
+    }
+  }
+}

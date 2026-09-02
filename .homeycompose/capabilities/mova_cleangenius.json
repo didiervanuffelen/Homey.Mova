@@ -1,0 +1,13 @@
+{
+  "type": "enum",
+  "title": { "en": "CleanGenius", "nl": "CleanGenius" },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "icon": "/assets/icons/cleangenius.svg",
+  "values": [
+    { "id": "off", "title": { "en": "Off", "nl": "Uit" } },
+    { "id": "routine", "title": { "en": "Routine", "nl": "Routine" } },
+    { "id": "deep", "title": { "en": "Deep", "nl": "Intensief" } }
+  ]
+}

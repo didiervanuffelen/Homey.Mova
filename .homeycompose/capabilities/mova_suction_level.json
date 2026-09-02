@@ -1,0 +1,14 @@
+{
+  "type": "enum",
+  "title": { "en": "Suction", "nl": "Zuigkracht" },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "icon": "/assets/icons/suction.svg",
+  "values": [
+    { "id": "quiet", "title": { "en": "Quiet", "nl": "Stil" } },
+    { "id": "standard", "title": { "en": "Standard", "nl": "Standaard" } },
+    { "id": "strong", "title": { "en": "Strong", "nl": "Sterk" } },
+    { "id": "turbo", "title": { "en": "Turbo", "nl": "Turbo" } }
+  ]
+}

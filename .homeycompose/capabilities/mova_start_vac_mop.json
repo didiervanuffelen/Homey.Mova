@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": { "en": "Start vacuum & mop", "nl": "Stofzuigen en dweilen" },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "uiQuickAction": true,
+  "icon": "/assets/icons/sparkles.svg"
+}

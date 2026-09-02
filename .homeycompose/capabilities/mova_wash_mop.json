@@ -1,0 +1,9 @@
+{
+  "type": "boolean",
+  "title": { "en": "Wash mop", "nl": "Dweil wassen" },
+  "getable": false,
+  "setable": true,
+  "uiComponent": "button",
+  "uiQuickAction": true,
+  "icon": "/assets/icons/wash.svg"
+}

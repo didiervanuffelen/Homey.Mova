@@ -1,0 +1,1241 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "com.mova.vacuum",
+  "version": "1.0.0",
+  "compatibility": ">=12.3.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "MOVA Vacuum",
+    "nl": "MOVA Stofzuiger"
+  },
+  "description": {
+    "en": "Control a MOVA robot vacuum from Homey with your MOVAhome account.",
+    "nl": "Bestuur een MOVA-robotstofzuiger vanuit Homey met je MOVAhome-account."
+  },
+  "category": [
+    "appliances"
+  ],
+  "tags": {
+    "en": [
+      "MOVA",
+      "vacuum",
+      "robot vacuum",
+      "V70",
+      "MOVAhome",
+      "mop"
+    ],
+    "nl": [
+      "MOVA",
+      "stofzuiger",
+      "robotstofzuiger",
+      "V70",
+      "MOVAhome",
+      "dweilen"
+    ]
+  },
+  "brandColor": "#155E63",
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Didier"
+  },
+  "api": {
+    "getMap": {
+      "method": "GET",
+      "path": "/map"
+    }
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "operational_status_changed",
+        "title": {
+          "en": "Status changed",
+          "nl": "Status veranderd"
+        },
+        "titleFormatted": {
+          "en": "Status changed to [[status]]",
+          "nl": "Status veranderde naar [[status]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          },
+          {
+            "name": "status",
+            "type": "dropdown",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "values": [
+              {
+                "id": "any",
+                "title": {
+                  "en": "Any",
+                  "nl": "Elke"
+                }
+              },
+              {
+                "id": "cleaning",
+                "title": {
+                  "en": "Vacuuming",
+                  "nl": "Stofzuigen"
+                }
+              },
+              {
+                "id": "mopping",
+                "title": {
+                  "en": "Mopping",
+                  "nl": "Dweilen"
+                }
+              },
+              {
+                "id": "vacuum_and_mop",
+                "title": {
+                  "en": "Vacuum & mop",
+                  "nl": "Stofzuigen en dweilen"
+                }
+              },
+              {
+                "id": "paused",
+                "title": {
+                  "en": "Paused",
+                  "nl": "Gepauzeerd"
+                }
+              },
+              {
+                "id": "returning",
+                "title": {
+                  "en": "Returning",
+                  "nl": "Naar station"
+                }
+              },
+              {
+                "id": "docked",
+                "title": {
+                  "en": "Docked",
+                  "nl": "Aan het station"
+                }
+              },
+              {
+                "id": "charging",
+                "title": {
+                  "en": "Charging",
+                  "nl": "Aan het laden"
+                }
+              },
+              {
+                "id": "stopped",
+                "title": {
+                  "en": "Stopped",
+                  "nl": "Gestopt"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "example": {
+              "en": "mopping"
+            }
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "operational_status_is",
+        "title": {
+          "en": "Status is",
+          "nl": "Status is"
+        },
+        "titleFormatted": {
+          "en": "Status is [[status]]",
+          "nl": "Status is [[status]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          },
+          {
+            "name": "status",
+            "type": "dropdown",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "values": [
+              {
+                "id": "cleaning",
+                "title": {
+                  "en": "Vacuuming",
+                  "nl": "Stofzuigen"
+                }
+              },
+              {
+                "id": "mopping",
+                "title": {
+                  "en": "Mopping",
+                  "nl": "Dweilen"
+                }
+              },
+              {
+                "id": "vacuum_and_mop",
+                "title": {
+                  "en": "Vacuum & mop",
+                  "nl": "Stofzuigen en dweilen"
+                }
+              },
+              {
+                "id": "paused",
+                "title": {
+                  "en": "Paused",
+                  "nl": "Gepauzeerd"
+                }
+              },
+              {
+                "id": "returning",
+                "title": {
+                  "en": "Returning",
+                  "nl": "Naar station"
+                }
+              },
+              {
+                "id": "docked",
+                "title": {
+                  "en": "Docked",
+                  "nl": "Aan het station"
+                }
+              },
+              {
+                "id": "charging",
+                "title": {
+                  "en": "Charging",
+                  "nl": "Aan het laden"
+                }
+              },
+              {
+                "id": "stopped",
+                "title": {
+                  "en": "Stopped",
+                  "nl": "Gestopt"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cleangenius_is",
+        "title": {
+          "en": "CleanGenius is",
+          "nl": "CleanGenius is"
+        },
+        "titleFormatted": {
+          "en": "CleanGenius is [[level]]",
+          "nl": "CleanGenius is [[level]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          },
+          {
+            "name": "level",
+            "type": "dropdown",
+            "title": {
+              "en": "CleanGenius",
+              "nl": "CleanGenius"
+            },
+            "values": [
+              {
+                "id": "off",
+                "title": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              },
+              {
+                "id": "routine",
+                "title": {
+                  "en": "Routine",
+                  "nl": "Routine"
+                }
+              },
+              {
+                "id": "deep",
+                "title": {
+                  "en": "Deep",
+                  "nl": "Intensief"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "start_vacuum",
+        "title": {
+          "en": "Start vacuuming",
+          "nl": "Start stofzuigen"
+        },
+        "hint": {
+          "en": "Sets vacuum-only cleaning mode, then starts the robot.",
+          "nl": "Zet de modus op alleen stofzuigen en start de robot."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          }
+        ]
+      },
+      {
+        "id": "start_mop",
+        "title": {
+          "en": "Start mopping",
+          "nl": "Start dweilen"
+        },
+        "titleFormatted": {
+          "en": "Start [[mode]]",
+          "nl": "Start [[mode]]"
+        },
+        "hint": {
+          "en": "Sets mop-only or vacuum-and-mop mode, then starts the robot.",
+          "nl": "Zet de modus op alleen dweilen of stofzuigen én dweilen, en start de robot."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          },
+          {
+            "name": "mode",
+            "type": "dropdown",
+            "title": {
+              "en": "Mode",
+              "nl": "Modus"
+            },
+            "values": [
+              {
+                "id": "mop",
+                "title": {
+                  "en": "Mop only",
+                  "nl": "Alleen dweilen"
+                }
+              },
+              {
+                "id": "vac_mop",
+                "title": {
+                  "en": "Vacuum and mop",
+                  "nl": "Stofzuigen en dweilen"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "pause_vacuum",
+        "title": {
+          "en": "Pause",
+          "nl": "Pauzeren"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          }
+        ]
+      },
+      {
+        "id": "stop_vacuum",
+        "title": {
+          "en": "Stop",
+          "nl": "Stoppen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          }
+        ]
+      },
+      {
+        "id": "dock_vacuum",
+        "title": {
+          "en": "Return to dock",
+          "nl": "Naar het station"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          }
+        ]
+      },
+      {
+        "id": "locate_vacuum",
+        "title": {
+          "en": "Locate",
+          "nl": "Lokaliseren"
+        },
+        "hint": {
+          "en": "Plays a sound so you can find the robot.",
+          "nl": "Laat de robot geluid maken zodat je hem kunt vinden."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          }
+        ]
+      },
+      {
+        "id": "set_suction_level",
+        "title": {
+          "en": "Set suction",
+          "nl": "Zet zuigkracht"
+        },
+        "titleFormatted": {
+          "en": "Set suction to [[level]]",
+          "nl": "Zet zuigkracht op [[level]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          },
+          {
+            "name": "level",
+            "type": "dropdown",
+            "title": {
+              "en": "Suction",
+              "nl": "Zuigkracht"
+            },
+            "values": [
+              {
+                "id": "quiet",
+                "title": {
+                  "en": "Quiet",
+                  "nl": "Stil"
+                }
+              },
+              {
+                "id": "standard",
+                "title": {
+                  "en": "Standard",
+                  "nl": "Standaard"
+                }
+              },
+              {
+                "id": "strong",
+                "title": {
+                  "en": "Strong",
+                  "nl": "Sterk"
+                }
+              },
+              {
+                "id": "turbo",
+                "title": {
+                  "en": "Turbo",
+                  "nl": "Turbo"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "set_water_flow",
+        "title": {
+          "en": "Set water level",
+          "nl": "Zet waterstand"
+        },
+        "titleFormatted": {
+          "en": "Set water level to [[level]]",
+          "nl": "Zet waterstand op [[level]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          },
+          {
+            "name": "level",
+            "type": "dropdown",
+            "title": {
+              "en": "Water level",
+              "nl": "Waterstand"
+            },
+            "values": [
+              {
+                "id": "low",
+                "title": {
+                  "en": "Low",
+                  "nl": "Laag"
+                }
+              },
+              {
+                "id": "medium",
+                "title": {
+                  "en": "Medium",
+                  "nl": "Gemiddeld"
+                }
+              },
+              {
+                "id": "high",
+                "title": {
+                  "en": "High",
+                  "nl": "Hoog"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "empty_dustbin",
+        "title": {
+          "en": "Empty dustbin",
+          "nl": "Stofbak legen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          }
+        ]
+      },
+      {
+        "id": "wash_mop",
+        "title": {
+          "en": "Wash mop",
+          "nl": "Dweil wassen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          }
+        ]
+      },
+      {
+        "id": "set_cleangenius",
+        "title": {
+          "en": "Set CleanGenius",
+          "nl": "Zet CleanGenius"
+        },
+        "titleFormatted": {
+          "en": "Set CleanGenius to [[level]]",
+          "nl": "Zet CleanGenius op [[level]]"
+        },
+        "hint": {
+          "en": "Off uses your suction and water settings. Routine and Deep let the robot choose them.",
+          "nl": "Uit gebruikt jouw zuigkracht en waterstand. Routine en Intensief laat de robot dat zelf kiezen."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=vacuum"
+          },
+          {
+            "name": "level",
+            "type": "dropdown",
+            "title": {
+              "en": "CleanGenius",
+              "nl": "CleanGenius"
+            },
+            "values": [
+              {
+                "id": "off",
+                "title": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              },
+              {
+                "id": "routine",
+                "title": {
+                  "en": "Routine",
+                  "nl": "Routine"
+                }
+              },
+              {
+                "id": "deep",
+                "title": {
+                  "en": "Deep",
+                  "nl": "Intensief"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "MOVA Vacuum",
+        "nl": "MOVA Stofzuiger"
+      },
+      "class": "vacuumcleaner",
+      "capabilities": [
+        "measure_battery",
+        "mova_operational_status",
+        "mova_cleaning_time",
+        "mova_cleaned_area",
+        "measure_main_brush",
+        "measure_side_brush",
+        "measure_filter",
+        "measure_mop",
+        "measure_sensor",
+        "alarm_consumable",
+        "alarm_generic",
+        "onoff",
+        "mova_suction_level",
+        "mova_water_flow",
+        "mova_cleangenius",
+        "mova_start_vac_mop",
+        "mova_start_vacuum",
+        "mova_start_mop",
+        "mova_pause",
+        "mova_stop",
+        "mova_dock",
+        "mova_locate",
+        "mova_auto_empty",
+        "mova_wash_mop",
+        "vacuumcleaner_state",
+        "button.reset_main_brush",
+        "button.reset_side_brush",
+        "button.reset_filter",
+        "button.reset_mop",
+        "button.reset_sensor"
+      ],
+      "capabilitiesOptions": {
+        "onoff": {
+          "title": {
+            "en": "Clean",
+            "nl": "Reinigen"
+          },
+          "icon": "/assets/icons/sparkles.svg",
+          "uiQuickAction": true
+        },
+        "alarm_generic": {
+          "title": {
+            "en": "Problem",
+            "nl": "Probleem"
+          }
+        },
+        "vacuumcleaner_state": {
+          "title": {
+            "en": "Vacuum state",
+            "nl": "Stofzuigerstatus"
+          },
+          "uiComponent": null
+        },
+        "button.reset_main_brush": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset main brush",
+            "nl": "Hoofdborstel resetten"
+          },
+          "desc": {
+            "en": "Set remaining life to 100% after replacing the main brush.",
+            "nl": "Zet de resterende levensduur op 100% na het vervangen van de hoofdborstel."
+          }
+        },
+        "button.reset_side_brush": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset side brush",
+            "nl": "Zijborstel resetten"
+          },
+          "desc": {
+            "en": "Set remaining life to 100% after replacing the side brush.",
+            "nl": "Zet de resterende levensduur op 100% na het vervangen van de zijborstel."
+          }
+        },
+        "button.reset_filter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset filter",
+            "nl": "Filter resetten"
+          },
+          "desc": {
+            "en": "Set remaining life to 100% after replacing the filter.",
+            "nl": "Zet de resterende levensduur op 100% na het vervangen van het filter."
+          }
+        },
+        "button.reset_mop": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset mop pad",
+            "nl": "Dweilpad resetten"
+          },
+          "desc": {
+            "en": "Set remaining life to 100% after replacing the mop pads.",
+            "nl": "Zet de resterende levensduur op 100% na het vervangen van de dweilpads."
+          }
+        },
+        "button.reset_sensor": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset sensors",
+            "nl": "Sensoren resetten"
+          },
+          "desc": {
+            "en": "Set remaining life to 100% after cleaning the sensors.",
+            "nl": "Zet de resterende levensduur op 100% na het reinigen van de sensoren."
+          }
+        }
+      },
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "images": {
+        "small": "/drivers/vacuum/assets/images/small.png",
+        "large": "/drivers/vacuum/assets/images/large.png",
+        "xlarge": "/drivers/vacuum/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "login"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login"
+        }
+      ],
+      "settings": [
+        {
+          "id": "poll_interval",
+          "type": "number",
+          "label": {
+            "en": "Poll interval (seconds)",
+            "nl": "Poll-interval (seconden)"
+          },
+          "value": 30,
+          "min": 10,
+          "max": 300,
+          "hint": {
+            "en": "How often Homey reads battery and status from MOVAhome.",
+            "nl": "Hoe vaak Homey accu en status bij MOVAhome ophaalt."
+          }
+        }
+      ],
+      "id": "vacuum"
+    }
+  ],
+  "widgets": {
+    "map": {
+      "name": {
+        "en": "Robot map",
+        "nl": "Robotkaart"
+      },
+      "height": "100%",
+      "transparent": false,
+      "devices": {
+        "type": "app",
+        "singular": true,
+        "filter": {
+          "class": "vacuumcleaner"
+        }
+      },
+      "settings": [],
+      "api": {
+        "getMap": {
+          "method": "GET",
+          "path": "/"
+        }
+      },
+      "id": "map"
+    }
+  },
+  "capabilities": {
+    "alarm_consumable": {
+      "type": "boolean",
+      "title": {
+        "en": "Consumable low",
+        "nl": "Verbruiksartikel bijna op"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "A consumable is almost worn out",
+        "nl": "Een verbruiksartikel is bijna op"
+      },
+      "insightsTitleFalse": {
+        "en": "Consumables are OK",
+        "nl": "Verbruiksartikelen zijn in orde"
+      },
+      "icon": "/assets/icons/consumable.svg"
+    },
+    "measure_filter": {
+      "type": "number",
+      "title": {
+        "en": "Filter",
+        "nl": "Filter"
+      },
+      "units": {
+        "en": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/icons/filter.svg"
+    },
+    "measure_main_brush": {
+      "type": "number",
+      "title": {
+        "en": "Main brush",
+        "nl": "Hoofdborstel"
+      },
+      "units": {
+        "en": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/icons/main_brush.svg"
+    },
+    "measure_mop": {
+      "type": "number",
+      "title": {
+        "en": "Mop pad",
+        "nl": "Dweilpad"
+      },
+      "units": {
+        "en": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/icons/mop.svg"
+    },
+    "measure_sensor": {
+      "type": "number",
+      "title": {
+        "en": "Sensors",
+        "nl": "Sensoren"
+      },
+      "units": {
+        "en": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/icons/sensor.svg"
+    },
+    "measure_side_brush": {
+      "type": "number",
+      "title": {
+        "en": "Side brush",
+        "nl": "Zijborstel"
+      },
+      "units": {
+        "en": "%"
+      },
+      "decimals": 0,
+      "min": 0,
+      "max": 100,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/icons/side_brush.svg"
+    },
+    "mova_auto_empty": {
+      "type": "boolean",
+      "title": {
+        "en": "Empty dustbin",
+        "nl": "Stofbak legen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/empty.svg"
+    },
+    "mova_cleaned_area": {
+      "type": "number",
+      "title": {
+        "en": "Cleaned area",
+        "nl": "Schoongemaakt oppervlak"
+      },
+      "units": {
+        "en": "m²",
+        "nl": "m²"
+      },
+      "decimals": 0,
+      "min": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/icons/area.svg"
+    },
+    "mova_cleangenius": {
+      "type": "enum",
+      "title": {
+        "en": "CleanGenius",
+        "nl": "CleanGenius"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "icon": "/assets/icons/cleangenius.svg",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off",
+            "nl": "Uit"
+          }
+        },
+        {
+          "id": "routine",
+          "title": {
+            "en": "Routine",
+            "nl": "Routine"
+          }
+        },
+        {
+          "id": "deep",
+          "title": {
+            "en": "Deep",
+            "nl": "Intensief"
+          }
+        }
+      ]
+    },
+    "mova_cleaning_time": {
+      "type": "number",
+      "title": {
+        "en": "Cleaning time",
+        "nl": "Schoonmaaktijd"
+      },
+      "units": {
+        "en": "min",
+        "nl": "min"
+      },
+      "decimals": 0,
+      "min": 0,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/icons/time.svg"
+    },
+    "mova_dock": {
+      "type": "boolean",
+      "title": {
+        "en": "Return to dock",
+        "nl": "Naar het station"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/dock.svg"
+    },
+    "mova_locate": {
+      "type": "boolean",
+      "title": {
+        "en": "Locate",
+        "nl": "Lokaliseren"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/locate.svg"
+    },
+    "mova_operational_status": {
+      "type": "enum",
+      "title": {
+        "en": "Status",
+        "nl": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/icons/status.svg",
+      "insights": true,
+      "values": [
+        {
+          "id": "cleaning",
+          "title": {
+            "en": "Vacuuming",
+            "nl": "Stofzuigen"
+          }
+        },
+        {
+          "id": "mopping",
+          "title": {
+            "en": "Mopping",
+            "nl": "Dweilen"
+          }
+        },
+        {
+          "id": "vacuum_and_mop",
+          "title": {
+            "en": "Vacuum & mop",
+            "nl": "Stofzuigen en dweilen"
+          }
+        },
+        {
+          "id": "paused",
+          "title": {
+            "en": "Paused",
+            "nl": "Gepauzeerd"
+          }
+        },
+        {
+          "id": "returning",
+          "title": {
+            "en": "Returning",
+            "nl": "Naar station"
+          }
+        },
+        {
+          "id": "docked",
+          "title": {
+            "en": "Docked",
+            "nl": "Aan het station"
+          }
+        },
+        {
+          "id": "charging",
+          "title": {
+            "en": "Charging",
+            "nl": "Aan het laden"
+          }
+        },
+        {
+          "id": "stopped",
+          "title": {
+            "en": "Stopped",
+            "nl": "Gestopt"
+          }
+        }
+      ]
+    },
+    "mova_pause": {
+      "type": "boolean",
+      "title": {
+        "en": "Pause",
+        "nl": "Pauzeren"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/pause.svg"
+    },
+    "mova_start_mop": {
+      "type": "boolean",
+      "title": {
+        "en": "Start mopping",
+        "nl": "Dweilen starten"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/start_mop.svg"
+    },
+    "mova_start_vac_mop": {
+      "type": "boolean",
+      "title": {
+        "en": "Start vacuum & mop",
+        "nl": "Stofzuigen en dweilen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/sparkles.svg"
+    },
+    "mova_start_vacuum": {
+      "type": "boolean",
+      "title": {
+        "en": "Start vacuuming",
+        "nl": "Stofzuigen starten"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/start_vacuum.svg"
+    },
+    "mova_stop": {
+      "type": "boolean",
+      "title": {
+        "en": "Stop",
+        "nl": "Stoppen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/stop.svg"
+    },
+    "mova_suction_level": {
+      "type": "enum",
+      "title": {
+        "en": "Suction",
+        "nl": "Zuigkracht"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "icon": "/assets/icons/suction.svg",
+      "values": [
+        {
+          "id": "quiet",
+          "title": {
+            "en": "Quiet",
+            "nl": "Stil"
+          }
+        },
+        {
+          "id": "standard",
+          "title": {
+            "en": "Standard",
+            "nl": "Standaard"
+          }
+        },
+        {
+          "id": "strong",
+          "title": {
+            "en": "Strong",
+            "nl": "Sterk"
+          }
+        },
+        {
+          "id": "turbo",
+          "title": {
+            "en": "Turbo",
+            "nl": "Turbo"
+          }
+        }
+      ]
+    },
+    "mova_wash_mop": {
+      "type": "boolean",
+      "title": {
+        "en": "Wash mop",
+        "nl": "Dweil wassen"
+      },
+      "getable": false,
+      "setable": true,
+      "uiComponent": "button",
+      "uiQuickAction": true,
+      "icon": "/assets/icons/wash.svg"
+    },
+    "mova_water_flow": {
+      "type": "enum",
+      "title": {
+        "en": "Water level",
+        "nl": "Waterstand"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "icon": "/assets/icons/water.svg",
+      "values": [
+        {
+          "id": "low",
+          "title": {
+            "en": "Low",
+            "nl": "Laag"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium",
+            "nl": "Gemiddeld"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High",
+            "nl": "Hoog"
+          }
+        }
+      ]
+    }
+  }
+}

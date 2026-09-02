@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <style>
+      html, body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        background: var(--homey-background-color, #fff);
+      }
+      .map-wrap {
+        position: relative;
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--homey-su-2, 8px);
+        padding: var(--homey-su-2, 8px) var(--homey-su-4, 16px);
+        border-top: var(--homey-line-light, 1px solid rgba(0,0,0,0.08));
+      }
+      .status {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .battery {
+        flex: 0 0 auto;
+        font-variant-numeric: tabular-nums;
+      }
+      .message {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--homey-su-4, 16px);
+        text-align: center;
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="homey-widget-full">
+    <div class="map-wrap">
+      <canvas id="map"></canvas>
+      <div id="message" class="message homey-text-small-light"></div>
+    </div>
+    <div class="bar">
+      <span id="status" class="status homey-text-small"></span>
+      <span id="battery" class="battery homey-text-small-light"></span>
+    </div>
+    <script type="text/javascript">
+      const canvas = document.getElementById('map');
+      const ctx = canvas.getContext('2d');
+      const messageEl = document.getElementById('message');
+      const statusEl = document.getElementById('status');
+      const batteryEl = document.getElementById('battery');
+
+      let HomeyApi = null;
+      let deviceId = '';
+      let lastView = null;
+      let pollTimer = null;
+
+      const STATUS_KEYS = {
+        cleaning: 'widget.map.status.cleaning',
+        mopping: 'widget.map.status.mopping',
+        vacuum_and_mop: 'widget.map.status.vacuum_and_mop',
+        paused: 'widget.map.status.paused',
+        returning: 'widget.map.status.returning',
+        docked: 'widget.map.status.docked',
+        charging: 'widget.map.status.charging',
+        stopped: 'widget.map.status.stopped',
+      };
+
+      function t(key, fallback) {
+        if (HomeyApi && typeof HomeyApi.__ === 'function') {
+          const value = HomeyApi.__(key);
+          if (value && value !== key) {
+            return value;
+          }
+        }
+        return fallback;
+      }
+
+      function statusLabel(status) {
+        const key = STATUS_KEYS[status];
+        if (!key) {
+          return status || '';
+        }
+        return t(key, status);
+      }
+
+      function cssColor(name, fallback) {
+        const value = getComputedStyle(document.body).getPropertyValue(name);
+        return (value && value.trim()) || fallback;
+      }
+
+      function isDark() {
+        return document.body.classList.contains('homey-dark-mode');
+      }
+
+      function colors() {
+        const dark = isDark();
+        return {
+          background: cssColor('--homey-background-color', dark ? '#1c1c1e' : '#ffffff'),
+          floor: dark ? '#1f5c61' : '#d5ecee',
+          wall: dark ? '#8fd3d7' : '#155E63',
+          path: '#e07a3d',
+          robot: dark ? '#5ee0e8' : '#155E63',
+          charger: dark ? '#8ee0a2' : '#2f7d32',
+          text: cssColor('--homey-text-color', dark ? '#f2f2f7' : '#111'),
+        };
+      }
+
+      function usedBounds(view) {
+        const { width, height, cells } = view;
+        let minX = width;
+        let minY = height;
+        let maxX = 0;
+        let maxY = 0;
+        for (let y = 0; y < height; y += 1) {
+          for (let x = 0; x < width; x += 1) {
+            if (cells[y * width + x]) {
+              if (x < minX) minX = x;
+              if (y < minY) minY = y;
+              if (x > maxX) maxX = x;
+              if (y > maxY) maxY = y;
+            }
+          }
+        }
+        [view.robot, view.charger].forEach((point) => {
+          if (!point) return;
+          minX = Math.min(minX, point.x);
+          minY = Math.min(minY, point.y);
+          maxX = Math.max(maxX, point.x);
+          maxY = Math.max(maxY, point.y);
+        });
+        if (minX > maxX) {
+          return { minX: 0, minY: 0, maxX: width - 1, maxY: height - 1 };
+        }
+        const pad = 2;
+        return {
+          minX: Math.max(0, Math.floor(minX) - pad),
+          minY: Math.max(0, Math.floor(minY) - pad),
+          maxX: Math.min(width - 1, Math.ceil(maxX) + pad),
+          maxY: Math.min(height - 1, Math.ceil(maxY) + pad),
+        };
+      }
+
+      function resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+        canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      }
+
+      function drawPoint(x, y, fill, radius) {
+        ctx.beginPath();
+        ctx.fillStyle = fill;
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawRobot(x, y, angle, fill, size) {
+        const rad = ((angle || 0) * Math.PI) / 180;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(-rad);
+        ctx.fillStyle = fill;
+        ctx.beginPath();
+        ctx.arc(0, 0, size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(size * 1.45, 0);
+        ctx.lineTo(-size * 0.55, size * 0.7);
+        ctx.lineTo(-size * 0.55, -size * 0.7);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(0, 0, size * 0.32, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawMap(view) {
+        resizeCanvas();
+        const palette = colors();
+        ctx.fillStyle = palette.background;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (!view || !view.ok || !view.width || !view.height) {
+          return;
+        }
+
+        const bounds = usedBounds(view);
+        const cellsW = bounds.maxX - bounds.minX + 1;
+        const cellsH = bounds.maxY - bounds.minY + 1;
+        const pad = Math.min(canvas.width, canvas.height) * 0.06;
+        const scale = Math.min(
+          (canvas.width - pad * 2) / cellsW,
+          (canvas.height - pad * 2) / cellsH,
+        );
+        const ox = (canvas.width - cellsW * scale) / 2;
+        const oy = (canvas.height - cellsH * scale) / 2;
+
+        function toScreen(point) {
+          return {
+            x: ox + (point.x - bounds.minX + 0.5) * scale,
+            y: oy + (point.y - bounds.minY + 0.5) * scale,
+          };
+        }
+
+        for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
+          for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
+            const value = view.cells[y * view.width + x];
+            if (!value) continue;
+            ctx.fillStyle = value === 2 ? palette.wall : palette.floor;
+            ctx.fillRect(
+              ox + (x - bounds.minX) * scale,
+              oy + (y - bounds.minY) * scale,
+              scale + 0.5,
+              scale + 0.5,
+            );
+          }
+        }
+
+        if (view.path && view.path.length > 1) {
+          ctx.strokeStyle = palette.path;
+          ctx.lineWidth = Math.max(1.5, scale * 0.22);
+          ctx.lineJoin = 'round';
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          view.path.forEach((point, index) => {
+            const screen = toScreen(point);
+            if (index === 0) ctx.moveTo(screen.x, screen.y);
+            else ctx.lineTo(screen.x, screen.y);
+          });
+          ctx.stroke();
+        }
+
+        if (view.charger) {
+          const charger = toScreen(view.charger);
+          const size = Math.max(3, scale * 0.7);
+          ctx.fillStyle = palette.charger;
+          ctx.fillRect(charger.x - size, charger.y - size, size * 2, size * 2);
+        }
+
+        if (view.robot) {
+          const robot = toScreen(view.robot);
+          drawRobot(robot.x, robot.y, view.robot.angle, palette.robot, Math.max(4, scale * 0.9));
+        }
+      }
+
+      function showMessage(text) {
+        messageEl.textContent = text || '';
+        messageEl.classList.toggle('hidden', !text);
+      }
+
+      function applyMeta(view) {
+        const name = view && view.name ? view.name : '';
+        const status = view && view.status ? statusLabel(view.status) : '';
+        statusEl.textContent = [name, status].filter(Boolean).join(' · ');
+        if (view && Number.isFinite(view.battery)) {
+          batteryEl.textContent = `${Math.round(view.battery)}%`;
+        } else {
+          batteryEl.textContent = '';
+        }
+      }
+
+      function pollDelay(view) {
+        const status = view && view.status;
+        if (status === 'cleaning' || status === 'mopping' || status === 'vacuum_and_mop' || status === 'returning') {
+          return 4000;
+        }
+        return 15000;
+      }
+
+      function schedule(view) {
+        if (pollTimer) {
+          clearTimeout(pollTimer);
+        }
+        pollTimer = setTimeout(loadMap, pollDelay(view));
+      }
+
+      function loadMap() {
+        if (!HomeyApi) {
+          return;
+        }
+        const path = deviceId ? `/?deviceId=${encodeURIComponent(deviceId)}` : '/';
+        HomeyApi.api('GET', path)
+          .then((view) => {
+            lastView = view;
+            applyMeta(view || {});
+            if (view && view.ok) {
+              showMessage('');
+              drawMap(view);
+            } else {
+              const error = view && view.error;
+              if (error === 'no_device' || error === 'select_device') {
+                showMessage(t('widget.map.no_device', 'Select a MOVA vacuum in the widget settings.'));
+              } else {
+                showMessage(t('widget.map.no_map', 'No map yet. Start a clean so the robot can send a floor plan.'));
+              }
+              drawMap(null);
+            }
+            schedule(view);
+          })
+          .catch((error) => {
+            showMessage(error && error.message ? error.message : t('widget.map.no_map', 'No map yet.'));
+            schedule(lastView);
+          });
+      }
+
+      window.addEventListener('resize', () => {
+        if (lastView && lastView.ok) {
+          drawMap(lastView);
+        }
+      });
+
+      function onHomeyReady(Homey) {
+        HomeyApi = Homey;
+        Homey.ready({ height: '100%' });
+        const ids = typeof Homey.getDeviceIds === 'function' ? Homey.getDeviceIds() : [];
+        deviceId = Array.isArray(ids) && ids.length ? ids[0] : '';
+        showMessage(t('widget.map.loading', 'Loading map…'));
+        loadMap();
+      }
+    </script>
+  </body>
+</html>
